@@ -149,7 +149,7 @@ function nextRound() {
   } else if (playerSays.length === round && round === 9) {
     if (checkSequence()) {
       $(".display").text(":)");
-      $(".instruction").text("⎺⎺▽▽✡Iggⓨ✡▽▽⎺⎺");
+      $(".instruction").text("▽▽✡Iggⓨ✡▽▽");
       cheer.play();
     } else {
       if (mode === "safe") {
