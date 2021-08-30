@@ -7,21 +7,33 @@ var simonSequence = "";
 var playerSequence = "";
 var round = 1; // the 'level' of the game, max 20
 var press = 0; // the index of simonSays array, i.e. simon's pad presses
-var mode = "safe" // safe / strict
+var mode = "safe"; // safe / strict
 
 // Sound files
-var greenBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
-var redBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
-var yellowBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
-var blueBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
-var scream = new Audio("http://soundbible.com/mp3/Female_Scream_Horror-NeoPhyTe-138499973.mp3");
-var cheer = new Audio("http://soundbible.com/mp3/Kids%20Cheering-SoundBible.com-681813822.mp3");
+var greenBoop = new Audio(
+  "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"
+);
+var redBoop = new Audio(
+  "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"
+);
+var yellowBoop = new Audio(
+  "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"
+);
+var blueBoop = new Audio(
+  "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"
+);
+var scream = new Audio(
+  "http://soundbible.com/mp3/Female_Scream_Horror-NeoPhyTe-138499973.mp3"
+);
+var cheer = new Audio(
+  "http://soundbible.com/mp3/Kids%20Cheering-SoundBible.com-681813822.mp3"
+);
 
 // pad flash functions
 
 function greenPad() {
   $(".tl").css("background-color", "rgba(150, 255, 150, 1)");
-  setTimeout(function() {
+  setTimeout(function () {
     $(".tl").css("background-color", "green");
   }, 1000);
   greenBoop.play();
@@ -29,7 +41,7 @@ function greenPad() {
 
 function redPad() {
   $(".tr").css("background-color", "rgba(255, 150, 150, 1)");
-  setTimeout(function() {
+  setTimeout(function () {
     $(".tr").css("background-color", "red");
   }, 1000);
   redBoop.play();
@@ -37,7 +49,7 @@ function redPad() {
 
 function yellowPad() {
   $(".bl").css("background-color", "rgba(255, 255, 150, 1)");
-  setTimeout(function() {
+  setTimeout(function () {
     $(".bl").css("background-color", "yellow");
   }, 1000);
   yellowBoop.play();
@@ -45,7 +57,7 @@ function yellowPad() {
 
 function bluePad() {
   $(".br").css("background-color", "rgba(150, 150, 255, 1)");
-  setTimeout(function() {
+  setTimeout(function () {
     $(".br").css("background-color", "blue");
   }, 1000);
   blueBoop.play();
@@ -64,7 +76,7 @@ function simonSayWhat() {
 // the recursive pattern to ensure the 1 second wait works is modified from http://stackoverflow.com/a/3583740/1841605
 
 function simonPlays() {
-  setTimeout(function() {
+  setTimeout(function () {
     if (simonSays[press] === 1) {
       greenPad();
     } else if (simonSays[press] === 2) {
@@ -78,7 +90,7 @@ function simonPlays() {
     if (press < round) {
       simonPlays();
     }
-  }, 1500)
+  }, 1500);
 }
 
 // check player attempt against simonSays
@@ -115,7 +127,7 @@ function displayUpdate() {
 
 //urgh...DRY...DRY
 function nextRound() {
-  if (round < 20) {
+  if (round < 9) {
     if (playerSays.length === round) {
       if (checkSequence()) {
         round++;
@@ -134,9 +146,10 @@ function nextRound() {
         }
       }
     }
-  } else if (playerSays.length === round && round === 20) {
+  } else if (playerSays.length === round && round === 9) {
     if (checkSequence()) {
       $(".display").text(":)");
+      $(".instruction").text("⎺⎺▽▽✡Iggⓨ✡▽▽⎺⎺");
       cheer.play();
     } else {
       if (mode === "safe") {
@@ -152,50 +165,49 @@ function nextRound() {
   }
 }
 
-
 // trigger boops on click
 
-$("#1").on("click", function() {
+$("#1").on("click", function () {
   greenPad();
   playerSays.push(1);
   nextRound();
-})
+});
 
-$("#2").on("click", function() {
+$("#2").on("click", function () {
   redPad();
   playerSays.push(2);
   nextRound();
-})
+});
 
-$("#3").on("click", function() {
+$("#3").on("click", function () {
   yellowPad();
   playerSays.push(3);
   nextRound();
-})
+});
 
-$("#4").on("click", function() {
+$("#4").on("click", function () {
   bluePad();
   playerSays.push(4);
   nextRound();
-})
+});
 
-$("#start-button").on("click", function() {
+$("#start-button").on("click", function () {
   gameReset();
   simonPlays();
-})
+});
 
-$("#strict-button").on("click", function() {
+$("#strict-button").on("click", function () {
   if (mode === "safe") {
     $("#strict-button").css({
       "background-color": "rgb(217, 0, 0)",
-      "color": "yellow"
+      color: "yellow",
     });
     mode = "strict";
   } else {
     $("#strict-button").css({
       "background-color": "rgb(217, 83, 79)",
-      "color": "white"
+      color: "white",
     });
     mode = "safe";
   }
-})
+});
